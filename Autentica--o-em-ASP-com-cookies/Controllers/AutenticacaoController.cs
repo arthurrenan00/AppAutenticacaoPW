@@ -31,7 +31,7 @@ namespace AppAutenticacao.Controllers
                 Senha = Hash.GerarHash(usuarioVM.Senha)
             };
             newUsuario.InsertUsuario(newUsuario);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Login","Autenticacao");
         }
 
         public ActionResult SelectLogin(string Login)
@@ -71,9 +71,15 @@ namespace AppAutenticacao.Controllers
             Usuario usuario = new Usuario();
             usuario = usuario.SelectUsuario(login);
 
-            if (Hash.GerarHash(viewmodel.NovaSenha) == usuario.Senha)
+            if (Hash.GerarHash(viewmodel.SenhaAtual) != usuario.Senha)
             {
                 ModelState.AddModelError("SenhaAtual", "Senha incorreta");
+                return View();
+            }
+
+            if (Hash.GerarHash(viewmodel.NovaSenha) == usuario.Senha)
+            {
+                ModelState.AddModelError("NovaSenha", "A senha nova é igual a antiga");
                 return View();
             }
 

@@ -153,6 +153,5 @@ namespace AppAutenticacao.Controllers
             Request.GetOwinContext().Authentication.SignOut("AppAplicationCookie");
             return RedirectToAction("Index", "Home");
         }
-        // teste git hub
     }
 }
